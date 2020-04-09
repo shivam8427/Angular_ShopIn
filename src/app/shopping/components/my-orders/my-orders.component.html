@@ -1,0 +1,12 @@
+<ul class="list-group list-group-flush" *ngIf="orders$ | async as orders; else block">
+    <li class="list-group-item" *ngFor="let order of orders">
+         {{order.shipping.name}}
+         <div>{{order.datePlaced | date}}</div>
+         <div class="float-right"><a href="#">View</a></div>   
+    </li>
+</ul>
+<ng-template #block>
+    <div class="alert alert-info">
+        <strong>Failed!</strong> You need to log in first.
+      </div>
+</ng-template>

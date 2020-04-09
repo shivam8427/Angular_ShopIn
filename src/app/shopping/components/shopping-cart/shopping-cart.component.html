@@ -1,0 +1,54 @@
+
+<div class="row col-10 " *ngIf="(cart | async) as cart$">
+
+     <h1 class=" heading text-center">Shopping Cart
+      </h1>
+ 
+ 
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th colspan="3" class="text-left">
+                <div *ngIf="cart$.itemsArray.length">
+                    <i class="text-muted" sty>We have {{cart$.shoppingCartCount()}} items in the cart</i>&nbsp;&nbsp;&nbsp;
+                    <button mat-fab (click)="addMoreItems()" >Add Item</button>
+                </div>
+                
+            </th>
+            <th style="width:200px" class="text-center">
+                <button style="border:3px double white ;" (click)="clearCart()">Clear Cart</button>&nbsp;
+            </th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Product</th>
+            <th class="text-center" style="width:400px">Quantity</th>
+            <th class="text-right"  style="width:200px">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of cart$.itemsArray;let i = index">
+
+            <ng-container *ngIf="!(item.quantity==0)">
+             <td>
+                 <img [src]="item.imageUrl" class="thumbnail">
+             </td>  
+            <td>{{item.title}}</td>
+            <td><app-product-quantity [product]="item" [shopping-cart]="cart$"></app-product-quantity></td>
+            <td  class="text-right" >{{item.totalPrice | currency:'USD':true}}</td>
+            <ng-container></ng-container>
+        </ng-container>
+        </tr>
+    </tbody>
+    <tfoot><tr>
+        <th></th>
+        <th></th>
+        <th  class="text-right" >Total </th>
+        <th  class="text-right" >{{cart$.totalCartPrice | currency:'USD':true}}</th>
+    </tr></tfoot>
+</table>
+<div *ngIf="cart$.itemsArray.length">
+    <a class="btn btn-sm" mat-raised-button routerLink="/check-out">Check Out</a>
+</div>
+</div>

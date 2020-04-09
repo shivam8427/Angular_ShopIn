@@ -1,0 +1,61 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top">
+ 
+      <a class="brand" routerLink="/">ShopIn</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerActiveLink> 
+          <a class="nav-link" routerLink="/shopping-cart">
+              <i class="fa fa-shopping-cart" *ngIf="shoppingCartCount == 0;else bigShoppingCart" ></i>
+              <ng-template #bigShoppingCart>
+                <i class="fa fa-shopping-cart" style="font-size:24px"></i>
+              </ng-template>
+              <span  class="badge badge-warning shape"  *ngIf="(cart | async) as cart$" >
+                {{ shoppingCartCount}}
+              </span>
+            
+          </a>
+          
+        </li>
+      </ul>
+ 
+      <ul class="navbar-nav">
+        
+          <li ngbDropdown class="nav-item dropdown loginListItem" *ngIf="appUser as user$ else loginTemplate">
+            <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+          <a ngbDropdownToggle  class=" dropdown-toggle"  #dropdown  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{user$.name}}
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu"  aria-labelledby="dropdown01">
+            <a class="dropdown-item" routerLink="/my-orders">My Orders</a>
+            <ng-container *ngIf="user$.isAdmin">
+            <a class="dropdown-item" routerLink="/admin/orders">Manage Orders</a>
+            <a class="dropdown-item" routerLink="/admin/products">Manage Products</a>
+          </ng-container>
+            <a class="dropdown-item" (click)="logOut()">Log out</a>
+          
+          </div>
+        </li>
+        <ng-template #loginTemplate >
+          <li class="nav-item" routerActiveLink>
+            <a class="btn btn-outline-dark" routerLink="/login" role="button" style="text-transform:none">
+              <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+              Login with Google
+            </a>
+          </li>
+             
+        </ng-template>
+        
+      </ul>
+    
+    </div>
+
+  
+  </nav>

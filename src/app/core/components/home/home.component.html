@@ -1,0 +1,13 @@
+<ngb-carousel class="picsum-img-wrapper "  interval="2000" *ngIf="images" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+  <ng-template ngbSlide *ngFor="let image of images">
+    <div class="img text-left" >
+      <img [src]="image" alt="Random slide">
+    </div>
+    <div class="carousel-caption">
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+<div style="margin-top: 80px;">
+  <app-products></app-products>
+</div>

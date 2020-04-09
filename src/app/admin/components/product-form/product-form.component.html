@@ -1,0 +1,66 @@
+
+<div class="row">
+  <div class="col-md-6">
+    <form #f="ngForm" (ngSubmit)="save(f.value)">
+           <div class="form-group">
+            <label for="title">Title</label>
+            <input [(ngModel)]="productSelected.title" name="title" #title="ngModel" id="title" type="text" class="form-control">
+           </div>
+           <div *ngIf="title.touched && title.invalid">
+            <div *ngIf="title.errors.required">Title is required </div>
+            
+           </div>
+        <div class="form-group">
+                <label for="price">Price</label>
+                <div class="input-group">
+                    <div class="input-group-preend">
+                        <span class="input-group-text">$</span>
+                    </div>  
+                <input [(ngModel)]="productSelected.price" name="price" #price="ngModel" id="price" type="number" class="form-control" required [min]="0">
+                </div>
+                <div *ngIf="price.touched && price.invalid">
+                    <div *ngIf="price.errors.min">Price should be 0 or more </div>
+                    <div *ngIf="price.errors.required">Price is required </div>
+                </div>      
+        </div>
+                
+        <div class="form-group">
+                    <label for="category">Category</label>
+                    <select ngModel name="category" id="category" [(ngModel)]="productSelected.category"  class="form-control" required>
+                        
+                        <option  *ngFor="let c of categories | async" [value]="c.key">
+                            {{c.payload.val().name}}
+                        </option>
+                    </select>
+        </div>
+              
+        <div class="form-group">
+            <label for="imageUrl">Image Url</label>
+            <input [(ngModel)]="productSelected.imageUrl"  name="imageUrl" #imageUrl="ngModel" id="imageUrl" type="text" class="form-control" required url>
+        </div>
+        <div *ngIf="imageUrl.touched && imageUrl.invalid">
+            <div *ngIf="imageUrl.errors.url"> URL is not in a format</div>
+            <div *ngIf="imageUrl.errors.required">Price is required </div>
+        </div>      
+        <button type="submit"  class="btn btn-md" >Save</button> &nbsp;
+        
+        <button  class="btn-danger btn-md" (click)="delete()" *ngIf="productSelectedId">Delete</button>
+        
+        <div hidden>
+        <div><p>How much u like us</p></div>
+        <mat-slider
+         thumbLabel
+         tickInterval="10"
+         [displayWith]="formatLabel"
+         min="1"
+         max="1000"
+         >
+        </mat-slider>
+    </div>
+        </form>
+    </div> 
+
+  <div class="col-md-6" >
+<app-products-card [product]="productSelected" [show-actions]="false"></app-products-card>
+</div>
+</div>
